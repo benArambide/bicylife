@@ -1,0 +1,6 @@
+.ro-form.ro-form-post {
+  padding: 10px;
+  border-radius: 5px;
+  background: #fff !important; }
+  .ro-form.ro-form-post textarea {
+    resize: none; }

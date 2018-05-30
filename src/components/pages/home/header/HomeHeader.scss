@@ -1,0 +1,36 @@
+.ro-header{
+   &.ro-header-dashboard{
+      height: 60px;
+      display: flex;
+      justify-content: space-between;
+      padding: 10px 2rem;
+      background: #2185D0;
+      .logo{
+         width: 150px;
+      }
+      position: fixed;
+      top: 0;
+      z-index: 1000;
+      left: 0;
+      right: 0;
+   }
+   .ro-header-menu{
+      margin: 0;
+      left: 0;
+      li{
+         margin: 0;
+         left: 0;
+         display: inline-block;
+         a{
+            color: #fff;
+            display: inline-block;
+            padding: 10px;
+            margin-left: 5px;
+            border-radius: 5px;
+            &:hover{
+               background: darken($color: #2185D0, $amount: 5);
+            }
+         }
+      }
+   }
+}

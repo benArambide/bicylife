@@ -1,0 +1,29 @@
+.ro-header.ro-header-dashboard {
+  height: 60px;
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 2rem;
+  background: #2185D0;
+  position: fixed;
+  top: 0;
+  z-index: 1000;
+  left: 0;
+  right: 0; }
+  .ro-header.ro-header-dashboard .logo {
+    width: 150px; }
+
+.ro-header .ro-header-menu {
+  margin: 0;
+  left: 0; }
+  .ro-header .ro-header-menu li {
+    margin: 0;
+    left: 0;
+    display: inline-block; }
+    .ro-header .ro-header-menu li a {
+      color: #fff;
+      display: inline-block;
+      padding: 10px;
+      margin-left: 5px;
+      border-radius: 5px; }
+      .ro-header .ro-header-menu li a:hover {
+        background: #1e77ba; }

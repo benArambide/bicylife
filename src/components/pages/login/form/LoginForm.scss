@@ -1,0 +1,13 @@
+.ro-form{
+   padding: 1rem;
+   &.ro-form-login{
+      background: rgba($color: #fff, $alpha: .1);
+      border-radius: 5px;
+      max-width: 100%;
+      width: 350px;
+      margin: 0 1rem;
+      label{
+         color: #fff !important;
+      }
+   }
+}
