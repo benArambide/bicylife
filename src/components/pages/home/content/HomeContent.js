@@ -1,7 +1,7 @@
 import React from 'react';
 import HomeFakeContent from './fake/HomeFakeContent'
-import PostForm from 'components/post/form/PostForm'
-import PostList from 'components/post/list/PostList'
+import PostFormContainer from 'components/post/form/PostFormContainer'
+import PostListContainer from 'components/post/list/PostListContainer'
 import Sticky from 'react-sticky-el';
 import './HomeContent.css';
 
@@ -14,8 +14,8 @@ const HomeContent = (props) => {
          </Sticky>
       </div>
       <div className="six wide column" >
-         <PostForm></PostForm>
-         <PostList></PostList>
+         <PostFormContainer></PostFormContainer>
+         <PostListContainer></PostListContainer>
       </div>
       <div className="five wide column">
          <Sticky scrollElement=".ro-content" top="20px">

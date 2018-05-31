@@ -1,6 +1,8 @@
 import React from 'react';
 import { Feed } from 'semantic-ui-react';
+import Moment from 'react-moment';
 import profile from 'assets/theme/img/profile-1.jpg'
+import PostHeaderPrivacity from './PostHeaderPrivacity';
 import './PostHeader.css';
 
 const PostHeader = (props) => {
@@ -10,9 +12,12 @@ const PostHeader = (props) => {
           <Feed.Label image={profile} />
           <Feed.Content>
             <Feed.User>
-              Josue Arambide
+              {props.post.owner_name}
             </Feed.User>
-            <Feed.Date content='1 day ago' />
+            <Feed.Date>
+               <PostHeaderPrivacity privacity={props.post.privacity} />&nbsp;&nbsp;|&nbsp;&nbsp;
+               <Moment fromNow>{props.post.created_at}</Moment>
+            </Feed.Date>   
           </Feed.Content>
         </Feed.Event>
       </Feed>

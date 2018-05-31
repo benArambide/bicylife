@@ -1,19 +1,8 @@
-import * as firebase from 'firebase'
-
-// Initialize Firebase
-var config = {
-   apiKey: "AIzaSyDJURPJF4BU1U1t0WroMsq9tL-w_wgVnNQ",
-   authDomain: "bicylife-1f69b.firebaseapp.com",
-   databaseURL: "https://bicylife-1f69b.firebaseio.com",
-   projectId: "bicylife-1f69b",
-   storageBucket: "bicylife-1f69b.appspot.com",
-   messagingSenderId: "1010294028165"
- };
- firebase.initializeApp(config);
+import ConnectionService from 'services/ConnectionService'
 
 class AuthService {
-   static auth = firebase.auth();
-   static db = firebase.database();
+   static auth = ConnectionService.auth;
+   static db = ConnectionService.db;
 
    static registration = ( data ) => {
       const promise = AuthService.auth.createUserWithEmailAndPassword(data.email, data.password);
@@ -26,7 +15,6 @@ class AuthService {
    }
 
    static saveUser = (data) => {
-      console.log(data)
       const promise = AuthService.db.ref('users/' + data.uid).set({
          name: data.name,
          lastname: data.lastname,
@@ -42,7 +30,7 @@ class AuthService {
             if (user) {
                resolve(user)
             } else {
-               reject(console.log)
+               reject(console.log())
             }
          })
       })
@@ -56,6 +44,10 @@ class AuthService {
    static isAuthenticated = () => {
       return !!localStorage.getItem('BICYLIFE');
    };
+
+   static getSession = () => {
+      return (localStorage.getItem('BICYLIFE') != null ) ? JSON.parse(localStorage.getItem('BICYLIFE')) : {};
+   }
 }
 
 export default AuthService;

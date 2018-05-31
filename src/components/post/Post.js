@@ -5,10 +5,10 @@ import PostFooter from 'components/post/footer/PostFooter';
 import './Post.css';
 
 const Post = (props) => {
+   // <PostFooter post={props.post}></PostFooter>
    return<section className="ro-post ro-mb-1">
-      <PostHeader></PostHeader>
-      <PostContent></PostContent>
-      <PostFooter></PostFooter>
+      <PostHeader post={props.post}></PostHeader>
+      <PostContent post={props.post}></PostContent>
    </section>;
 }
 
