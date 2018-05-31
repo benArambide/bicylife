@@ -13,10 +13,10 @@ const HomeHeader = (props) => {
             </a>
          </li>
          <li>
-            <a href="#">
-               Configuración
+            <a href="" onClick={props.logout}>
+               Salir
                &nbsp;&nbsp;
-               <Icon name="chevron down"></Icon>
+               <Icon name="sign out"></Icon>
             </a>
          </li>
       </ul>

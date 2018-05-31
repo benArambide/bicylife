@@ -7,7 +7,7 @@ import './Home.css';
 
 const HomePage = (props) => {
    return<section>
-      <HomeHeader></HomeHeader>
+      <HomeHeader logout={props.logout}></HomeHeader>
       <HomeContentContainer></HomeContentContainer>
    </section>;
 }

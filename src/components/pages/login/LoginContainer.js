@@ -1,11 +1,15 @@
 import React,{Component} from 'react';
 import LoginForm from 'components/pages/login/form/LoginForm';
 import RegistrationForm from 'components/pages/login/form/RegistrationForm';
+import AuthService from 'services/AuthService';
+import TranslateService from 'services/TranslateService';
+import { withRouter } from 'react-router-dom'
+
 class LoginContainer extends Component{
    constructor(props){
       super(props);
       this.state = {};
-      this.state.currentForm = 'REGISTRATION';
+      this.state.currentForm = 'LOGIN';
 
       this.state.login = {};
       this.state.login.email = '';
@@ -25,10 +29,15 @@ class LoginContainer extends Component{
          name: {required: false, invalid: false},
          lastname: {required: false, invalid: false},
          email : {required: false, invalid: false},
-         password : {required: false, invalid: false}
+         password : {required: false, invalid: false, size: false}
       }
 
       this.state.loadingRegistration = false;
+      this.state.loadingLogin = false;
+      this.state.loginError = false;
+      this.state.registrationError = false;
+      this.state.registrationErrorMessage = '';
+      this.state.registrationSuccess = false;
    }
 
    handleTypeForm = ( type ) => {
@@ -37,14 +46,39 @@ class LoginContainer extends Component{
    
    handleLogin = e => {
       e.preventDefault();
-      this.validateLogin();
+      let valid = this.validateLogin();
+      if( !valid ) return;
+
+      this.setState({loadingLogin: true})
+      AuthService.login(this.state.login)
+      .then( response => {
+         this.setState({loadingLogin: false})
+         this.props.history.replace("/");
+      }, error => {
+         console.error('No login', error);
+         this.setState({loadingLogin: false, loginError: true})
+      })
    }
    
    handleRegistration = e => {
       e.preventDefault();
-      let isValidate = this.validateRegistration();
+      let valid = this.validateRegistration();
+      if( !valid ) return;
 
       this.setState({loadingRegistration: true})
+      AuthService.registration(this.state.registration)
+      .then( response => {
+         AuthService.saveUser({
+            ...this.state.registration,
+            uid: response.user.uid
+         })
+         .then( response => {
+            this.setState({loadingRegistration: false, registrationSuccess: true})
+         }, error => { console.error('User not saved') })
+      }, error => {
+         console.log('error registration', error)
+         this.setState({loadingRegistration: false, registrationError: true, registrationErrorMessage: TranslateService.translate(error.message) })
+      })
    }
 
    handleChangeLogin = e => {
@@ -83,7 +117,9 @@ class LoginContainer extends Component{
          }
       }});
 
-      return (_loginError.email == {} || _loginError.password == {} ) ? true : false;
+      return (
+         JSON.stringify(_loginError.email) == JSON.stringify({}) &&
+         JSON.stringify(_loginError.password) == JSON.stringify({}) ) ? true : false;
    }
 
    validateRegistration = () => {
@@ -96,6 +132,7 @@ class LoginContainer extends Component{
       if( !this.state.registration.email ) _registrationError.email.required = true;
       if( !this._validateEmail(this.state.registration.email) ) _registrationError.email.invalid = true;
       if( !this.state.registration.password ) _registrationError.password.required = true;
+      if( this.state.registration.password.length < 6 ) _registrationError.password.size = true;
       if( !this.state.registration.name ) _registrationError.name.required = true;
       if( !this.state.registration.lastname ) _registrationError.lastname.required = true;
 
@@ -105,7 +142,8 @@ class LoginContainer extends Component{
             invalid: _registrationError.email.invalid
          },
          password : {
-            required : _registrationError.password.required
+            required : _registrationError.password.required,
+            size: _registrationError.password.size
          },
          name : {
             required : _registrationError.name.required
@@ -114,6 +152,11 @@ class LoginContainer extends Component{
             required : _registrationError.lastname.required
          }
       }});
+      return ( 
+         JSON.stringify(_registrationError.name) === JSON.stringify({}) && 
+         JSON.stringify(_registrationError.lastname)  === JSON.stringify({}) &&
+         JSON.stringify(_registrationError.email) === JSON.stringify({}) &&
+         JSON.stringify(_registrationError.password) === JSON.stringify({}) ) ? true : false;
    }
 
    _validateEmail( emailString ){
@@ -131,7 +174,9 @@ class LoginContainer extends Component{
                handleSubmit={this.handleLogin}
                handleChange={this.handleChangeLogin}
                handleModel={this.state.login}
-               errors={this.state.loginErrors}></LoginForm>;
+               errors={this.state.loginErrors}
+               loading={this.state.loadingLogin}
+               error={this.state.loginError}></LoginForm>;
       if(this.state.currentForm == 'REGISTRATION')
          currentForm = <RegistrationForm 
                clickHandlerFormTo={this.handleTypeForm}
@@ -139,7 +184,10 @@ class LoginContainer extends Component{
                handleSubmit={this.handleRegistration}
                handleChange={this.handleChangeRegistration}
                loading={this.state.loadingRegistration}
-               errors={this.state.registrationErrors}></RegistrationForm>;
+               errors={this.state.registrationErrors}
+               error={this.state.registrationError}
+               errorMessage={this.state.registrationErrorMessage}
+               success={this.state.registrationSuccess}></RegistrationForm>;
 
       return<React.Fragment>
          {currentForm}
@@ -147,4 +195,4 @@ class LoginContainer extends Component{
    }
 }
 
-export default LoginContainer;   
+export default withRouter(LoginContainer);   

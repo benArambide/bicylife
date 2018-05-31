@@ -2,39 +2,39 @@ import React, { Component } from 'react';
 import 'assets/theme/scss/index.css';
 
 // router
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Route, Redirect } from "react-router-dom";
 
 // roPages
 import LoginPage from "components/pages/login/Login";
-import HomePage from 'components/pages/home/Home';
+import HomeContainer from 'components/pages/home/HomeContainer';
 
-import * as firebase from 'firebase'
-
-// Initialize Firebase
-var config = {
-   apiKey: "AIzaSyDJURPJF4BU1U1t0WroMsq9tL-w_wgVnNQ",
-   authDomain: "bicylife-1f69b.firebaseapp.com",
-   databaseURL: "https://bicylife-1f69b.firebaseio.com",
-   projectId: "bicylife-1f69b",
-   storageBucket: "bicylife-1f69b.appspot.com",
-   messagingSenderId: "1010294028165"
- };
- firebase.initializeApp(config);
-
+import AuthService from 'services/AuthService';
 
 class App extends Component {
-  render() {
-    return (
-      <div>
+
+   componentDidMount() {
+      const storageKey = 'BICYLIFE'
+      AuthService.auth.onAuthStateChanged(user => {
+         if (user) {
+            window.localStorage.setItem(storageKey, JSON.stringify(user));
+         } else {
+            window.localStorage.removeItem(storageKey);
+         }
+      });
+   }
+
+   render() {
+      return (
          <Router>
             <div>
-               <Route exact path="/" component={HomePage} />
+               <Route exact path="/" render={ () => {
+                  return AuthService.isAuthenticated() ? <HomeContainer /> : <Redirect to="/login"></Redirect> 
+               }} />
                <Route path="/login" component={LoginPage} />
             </div>
          </Router>
-      </div>
-    );
-  }
+      );
+   }
 }
 
 export default App;
