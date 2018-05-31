@@ -3,6 +3,7 @@ import { Feed } from 'semantic-ui-react';
 import Moment from 'react-moment';
 import profile from 'assets/theme/img/profile-1.jpg'
 import PostHeaderPrivacity from './PostHeaderPrivacity';
+import PostHeaderOptions from './PostHeaderOptions';
 import './PostHeader.css';
 
 const PostHeader = (props) => {
@@ -21,6 +22,9 @@ const PostHeader = (props) => {
           </Feed.Content>
         </Feed.Event>
       </Feed>
+      { props.post.owner_post && <PostHeaderOptions 
+            handlerDelete={props.handleDeletePost}
+            handlerEdit={props.handleEditPost}></PostHeaderOptions>}
    </section>;
 }
 

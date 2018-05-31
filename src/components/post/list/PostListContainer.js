@@ -37,6 +37,7 @@ class PostFormContainer extends Component{
    }
 
    _filterPosts = ( filter = {} ) => {
+      let session = AuthService.getSession();
       if(this.state.activePublic){ this.setState({loadingPublic:true}) }
       if(this.state.activeFriends){ this.setState({loadingFriends:true}) }
 
@@ -46,7 +47,8 @@ class PostFormContainer extends Component{
          let postsList = [];
          for (var key in posts) {
             if (posts.hasOwnProperty(key)) {
-               posts[key].uuid = key;
+               posts[key].uid = key;
+               posts[key].owner_post = posts[key].owner_uid == session.uid;
                postsList.push(posts[key]);
             }
          }

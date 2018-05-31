@@ -7,7 +7,9 @@ import './Post.css';
 const Post = (props) => {
    // <PostFooter post={props.post}></PostFooter>
    return<section className="ro-post ro-mb-1">
-      <PostHeader post={props.post}></PostHeader>
+      <PostHeader post={props.post} 
+         handleDeletePost={props.handleDeletePost}
+         handleEditPost={props.handleEditPost}></PostHeader>
       <PostContent post={props.post}></PostContent>
    </section>;
 }

@@ -1,5 +1,6 @@
-.ro-post .ro-post-header .content .user {
-  margin-bottom: 10px; }
-
-.ro-post .ro-post-header .label img {
-  margin-top: 8px; }
+.ro-post .ro-post-header {
+  position: relative; }
+  .ro-post .ro-post-header .content .user {
+    margin-bottom: 10px; }
+  .ro-post .ro-post-header .label img {
+    margin-top: 8px; }

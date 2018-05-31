@@ -7,11 +7,9 @@ class PostService {
 
    static makePost = ( data ) => {
       let session = AuthService.getSession();
-      console.log('a insertar', data )
       data.privacity = data.privacity || 'public';
       const uui = PostService.db.ref('posts').push().key;
       const structure = 'posts/' + data.privacity + '/' + uui;
-      console.log(structure)
       const promise = PostService.db.ref(structure).set({
          message: data.message,
          image: null,

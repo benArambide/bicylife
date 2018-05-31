@@ -169,6 +169,9 @@ img {
 .ro-pl-4 {
   padding-left: 4rem !important; }
 
+.ui.page.modals.dimmer.transition.visible {
+  display: flex !important; }
+
 .ro-flex {
   display: -ms-flexbox;
   display: -webkit-flex;

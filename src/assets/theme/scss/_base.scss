@@ -66,3 +66,7 @@ img{
    padding-left: $i+rem !important;
    }
 }
+
+.ui.page.modals.dimmer.transition.visible{
+   display: flex !important;
+}

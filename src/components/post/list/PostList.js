@@ -1,5 +1,5 @@
 import React from 'react';
-import Post from 'components/post/Post';
+import PostContainer from 'components/post/PostContainer';
 import { Button } from 'semantic-ui-react';
 import './PostList.css';
 
@@ -13,7 +13,7 @@ const PostList = (props) => {
       </div>
       {
          props.posts.map( (post) => {
-            return  <Post key={post.uuid} post={post}></Post>
+            return  <PostContainer key={post.uid} post={post}></PostContainer>
          })  
       }
    </section>;
