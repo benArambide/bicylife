@@ -13,7 +13,11 @@ const PostList = (props) => {
       </div>
       {
          props.posts.map( (post) => {
-            return  <PostContainer key={post.uid} post={post}></PostContainer>
+            return  <PostContainer 
+               key={post.uid} 
+               post={post} 
+               onDeletePost={props.onDeletePost}>
+            </PostContainer>
          })  
       }
    </section>;

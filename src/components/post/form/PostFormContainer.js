@@ -32,7 +32,6 @@ class PostFormContainer extends Component{
       })
       .then( response => {
          this.setState({message: ''});
-         console.log(response);
       }, error => { console.log('No se puede postear')} )
    }
 

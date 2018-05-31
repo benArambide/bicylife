@@ -15,16 +15,16 @@ class PostContainer extends Component{
    }
 
    handleDeletePost = () => {
-      console.log('elimino')
       this.setState({openDeleteConfirm:true})
    }
 
    deletePost = () => {
+      PostService.deletePost(this.props.post);
+      this.props.onDeletePost( this.props.post );
       this.setState({openDeleteConfirm:false})
    } 
 
    closeConfirm = () => {
-      console.log('cierror')
       this.setState({openDeleteConfirm:false})
    }
 

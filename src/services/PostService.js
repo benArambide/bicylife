@@ -30,6 +30,11 @@ class PostService {
       else
          return ref.once('value');
    }
+
+   static deletePost = (post) => {
+      var ref = PostService.db.ref().child('/posts/' + post.privacity)
+      ref.child(post.uid).remove();
+   }
 } 
 
 export default PostService;

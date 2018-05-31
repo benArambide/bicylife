@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PostService from 'services/PostService';
 import AuthService from 'services/AuthService';
-
+import * as _ from 'lodash';
 import PostList from './PostList'
 class PostFormContainer extends Component{
    
@@ -57,6 +57,12 @@ class PostFormContainer extends Component{
       }, error => { console.error(error); this.setState({loadingPublic:false, loadingFriends: false}); })
    }
 
+   handleRemoveFromList = ( post ) => {
+      let list = this.state.postList;
+      _.remove(list, ele => ele.uid == post.uid )
+      this.setState({postList:list});
+   }
+
    render(){
       return(<React.Fragment>
          <PostList 
@@ -67,6 +73,7 @@ class PostFormContainer extends Component{
             loadingFriends={this.state.loadingFriends}
             filterByPublic={this.filterByPublic}
             filterByFriends={this.filterByFriends}
+            onDeletePost={this.handleRemoveFromList}
             ></PostList>
       </React.Fragment>);
    }
