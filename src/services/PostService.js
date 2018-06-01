@@ -23,6 +23,12 @@ class PostService {
       return promise;
    }
 
+   static updatePost = (data) => {
+      const structure = 'posts/' + data.privacity + '/' + data.uid;
+      const promise = PostService.db.ref(structure).set(data);
+      return promise;
+   }
+
    static getPosts = ( filter ) => {
       var ref = PostService.db.ref().child('/posts/' + filter.privacity)
       if(filter.privacity == 'friends')
