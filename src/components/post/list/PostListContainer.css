@@ -1,0 +1,15 @@
+.ro-post-list-container .ui.menu {
+  display: flex; }
+  .ro-post-list-container .ui.menu .item {
+    width: 50%; }
+    .ro-post-list-container .ui.menu .item.active {
+      background: #2185D0;
+      color: #fff; }
+
+.ro-post-list-container .ui.bottom.attached.segment {
+  padding: 0;
+  background: transparent;
+  border: 0; }
+
+.ro-post-list-container .ui.bottom.attached.segment.loading {
+  background: #fff; }

@@ -14,6 +14,7 @@ var config = {
 class ConnectionService {
    static auth = firebase.auth();
    static db = firebase.database();
+   static store = firebase.storage();
 }
 
 export default ConnectionService;

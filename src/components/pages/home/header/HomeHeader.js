@@ -11,11 +11,6 @@ const HomeHeader = (props) => {
       <ul className="ro-header-menu">
          <li>
             <a href="#">
-               <b>Inicio</b>
-            </a>
-         </li>
-         <li>
-            <a href="#">
                <b>Hola! &nbsp;&nbsp; {session.email}</b>
             </a>
          </li>

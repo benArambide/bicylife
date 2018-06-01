@@ -12,6 +12,7 @@ class PostFormContainer extends Component{
       this.state.message = '';
       this.state.image = null;
       this.state.privacity = '';
+      this.state.loadingPost = false;
    }
    
 
@@ -26,16 +27,22 @@ class PostFormContainer extends Component{
    handlePost = (e) => {
       e.preventDefault();
       if(!this.state.message) return;
+
+      this.setState({loadingPost:true});
       PostService.makePost({
          message: this.state.message,
-         privacity: this.state.privacity
+         privacity: this.state.privacity,
+         image : this.state.image
       })
       .then( response => {
+         this.setState({image:null})
          this.setState({message: ''});
-      }, error => { console.log('No se puede postear')} )
+         this.setState({loadingPost:false});
+      }, error => { console.log('No se puede postear'); this.setState({loadingPost:false});} )
    }
 
    getFile = (img) => {
+      // validate image
       this.setState({image:img})
    }
    handleDeleteImage = (e) => {
@@ -52,7 +59,8 @@ class PostFormContainer extends Component{
             makePost={this.handlePost}
             handleChange={this.handleChangePost}
             uploadedImage={this.state.image}
-            deleteImage={this.handleDeleteImage}></PostForm>
+            deleteImage={this.handleDeleteImage}
+            loading={this.state.loadingPost}></PostForm>
       </React.Fragment>);
    }
 }

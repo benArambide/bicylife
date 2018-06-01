@@ -3,58 +3,64 @@ import PostService from 'services/PostService';
 import AuthService from 'services/AuthService';
 import * as _ from 'lodash';
 import PostList from './PostList'
+import './PostListContainer.css'
+import { Button, Tab } from 'semantic-ui-react';
 class PostFormContainer extends Component{
    
    constructor(props){
       super(props);
       this.state = {};
-      this.state.postList = [];
-
-      this.state.activePublic = true;
-      this.state.activeFriends = false;
+      this.state.postListPublic = [];
+      this.state.postListFriends = [];
       this.state.loadingPublic = false;
       this.state.loadingFriends = false;
    }
 
    componentDidMount(){
-      this.filterByPublic();
-   }
+      this.filterBy('public');
+      this.filterBy('friends');
 
-   filterByFriends = () => {
-      let session = AuthService.getSession();
-      this.setState({activePublic:false,activeFriends:true})
-      this._filterPosts({
-         privacity: 'friends',
-         owner_uid: session.uid
-      });
-   }
-
-   filterByPublic = () => {
-      this.setState({activePublic:true,activeFriends:false})
-      this._filterPosts({
+      //listeners
+      PostService.listenNewPosts({
+         owner_uid: AuthService.getSession().uid,
          privacity: 'public'
+      }, (response) => { this._processPosts(response, 'public'); } );
+      PostService.listenNewPosts({
+         owner_uid: AuthService.getSession().uid,
+         privacity: 'friends'
+      }, (response) => { this._processPosts(response, 'friends'); } );
+   }
+
+   filterBy = ( type = 'public') => {
+      this._filterPosts({
+         privacity: type,
+         owner_uid: AuthService.getSession().uid
       });
    }
 
    _filterPosts = ( filter = {} ) => {
-      let session = AuthService.getSession();
-      if(this.state.activePublic){ this.setState({loadingPublic:true}) }
-      if(this.state.activeFriends){ this.setState({loadingFriends:true}) }
-
+      this.setState({loadingPublic:true,loadingFriends:true})
       PostService.getPosts( filter )
       .then( response => {
-         let posts = response.val();
-         let postsList = [];
-         for (var key in posts) {
-            if (posts.hasOwnProperty(key)) {
-               posts[key].uid = key;
-               posts[key].owner_post = posts[key].owner_uid == session.uid;
-               postsList.push(posts[key]);
-            }
-         }
-         postsList.reverse();
-         this.setState({postList:postsList,loadingPublic:false, loadingFriends: false});
+         this._processPosts(response, filter.privacity);
       }, error => { console.error(error); this.setState({loadingPublic:false, loadingFriends: false}); })
+   }
+
+   _processPosts = ( response, type = 'public' ) => {
+      let posts = response.val();
+      let postsList = [];
+      for (var key in posts) {
+         if (posts.hasOwnProperty(key)) {
+            posts[key].uid = key;
+            posts[key].owner_post = posts[key].owner_uid == AuthService.getSession().uid;
+            postsList.push(posts[key]);
+         }
+      }
+      postsList.reverse();
+      if(type == 'public')
+         this.setState({postListPublic:postsList,loadingPublic:false});
+      else
+         this.setState({postListFriends:postsList,loadingFriends: false});
    }
 
    handleRemoveFromList = ( post ) => {
@@ -65,16 +71,26 @@ class PostFormContainer extends Component{
 
    render(){
       return(<React.Fragment>
-         <PostList 
-            posts={this.state.postList}
-            activePublic={this.state.activePublic}
-            activeFriends={this.state.activeFriends}
-            loadingPublic={this.state.loadingPublic}
-            loadingFriends={this.state.loadingFriends}
-            filterByPublic={this.filterByPublic}
-            filterByFriends={this.filterByFriends}
-            onDeletePost={this.handleRemoveFromList}
-            ></PostList>
+         <div className="ro-mt-1 ro-post-list-container">
+            <Tab menu={{ attached: false }} panes={[
+               { menuItem: 'Publicaciones Públicas', render: () =>
+                  <Tab.Pane loading={this.state.loadingPublic}>
+                     <PostList 
+                        posts={this.state.postListPublic}
+                        onDeletePost={this.handleRemoveFromList}
+                        ></PostList>
+                  </Tab.Pane> 
+               },
+               { menuItem: 'Publicaciones De Amigos', render: () =>
+                  <Tab.Pane loading={this.state.loadingFriends}>
+                     <PostList 
+                        posts={this.state.postListFriends}
+                        onDeletePost={this.handleRemoveFromList}
+                        ></PostList>
+                  </Tab.Pane> 
+               }
+            ]} />
+         </div>
       </React.Fragment>);
    }
 }

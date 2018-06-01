@@ -14,7 +14,7 @@ const PostForm = (props) => {
                <option value="public">Público</option>
                <option value="friends">Amigos</option>
             </select>
-            <Button primary onClick={props.makePost}>Publicar</Button>
+            <Button primary onClick={props.makePost} loading={props.loading}>Publicar</Button>
          </div>
       </form>
       <PreviewImageContainer img={props.uploadedImage} deleteImage={props.deleteImage}></PreviewImageContainer>
