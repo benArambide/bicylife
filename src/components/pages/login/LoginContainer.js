@@ -73,7 +73,17 @@ class LoginContainer extends Component{
             uid: response.user.uid
          })
          .then( response => {
-            this.setState({loadingRegistration: false, registrationSuccess: true})
+            this.setState(
+               {
+                  loadingRegistration: false, registrationSuccess: true,
+                  registration:
+                  { 
+                     names : '',
+                     lastname : '',
+                     email : '',
+                     password : ''
+                  }
+               })
          }, error => { console.error('User not saved') })
       }, error => {
          console.log('error registration', error)
@@ -173,6 +183,7 @@ class LoginContainer extends Component{
                to="REGISTRATION"
                handleSubmit={this.handleLogin}
                handleChange={this.handleChangeLogin}
+               data={this.state.login}
                handleModel={this.state.login}
                errors={this.state.loginErrors}
                loading={this.state.loadingLogin}
@@ -183,6 +194,7 @@ class LoginContainer extends Component{
                to="LOGIN"
                handleSubmit={this.handleRegistration}
                handleChange={this.handleChangeRegistration}
+               data={this.state.registration}
                loading={this.state.loadingRegistration}
                errors={this.state.registrationErrors}
                error={this.state.registrationError}
