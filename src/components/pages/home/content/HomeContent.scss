@@ -10,11 +10,11 @@
 @include ro-media-tablet{
    #root{
       .ro-content{
-         padding-left: 10px !important;
-         padding-right: 10px !important;
+         padding-left: 8px !important;
+         padding-right: 8px !important;
          .column{
-            padding-left: 10px !important;
-            padding-right: 10px !important;
+            padding-left: 0px !important;
+            padding-right: 0px !important;
          }
       }
    }

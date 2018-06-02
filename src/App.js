@@ -13,13 +13,10 @@ import AuthService from 'services/AuthService';
 class App extends Component {
 
    componentDidMount() {
-      const storageKey = 'BICYLIFE'
+      
       AuthService.auth.onAuthStateChanged(user => {
-         if (user) {
-            window.localStorage.setItem(storageKey, JSON.stringify(user));
-         } else {
-            window.localStorage.removeItem(storageKey);
-         }
+         if (user) { AuthService.saveSessionUser(user) } 
+         else { AuthService.removeSessionUser() }
       });
    }
 
@@ -30,7 +27,10 @@ class App extends Component {
                <Route exact path="/" render={ () => {
                   return AuthService.isAuthenticated() ? <HomeContainer /> : <Redirect to="/login"></Redirect> 
                }} />
-               <Route path="/login" component={LoginPage} />
+               <Route exact path="/login" render={ () => {
+                  return !AuthService.isAuthenticated() ? <LoginPage /> : <Redirect to="/"></Redirect> 
+               }} />
+               <Redirect from="*" to="/" />
             </div>
          </Router>
       );

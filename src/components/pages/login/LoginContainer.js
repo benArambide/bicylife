@@ -52,6 +52,7 @@ class LoginContainer extends Component{
       this.setState({loadingLogin: true})
       AuthService.login(this.state.login)
       .then( response => {
+         AuthService.saveSessionUser(response.user)
          this.setState({loadingLogin: false})
          this.props.history.replace("/");
       }, error => {

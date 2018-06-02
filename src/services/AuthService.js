@@ -3,6 +3,7 @@ import ConnectionService from 'services/ConnectionService'
 class AuthService {
    static auth = ConnectionService.auth;
    static db = ConnectionService.db;
+   static storageKey = 'BICYLIFE';
 
    static registration = ( data ) => {
       const promise = AuthService.auth.createUserWithEmailAndPassword(data.email, data.password);
@@ -42,11 +43,19 @@ class AuthService {
    }
 
    static isAuthenticated = () => {
-      return !!localStorage.getItem('BICYLIFE');
+      return !!localStorage.getItem(AuthService.storageKey);
    };
 
    static getSession = () => {
-      return (localStorage.getItem('BICYLIFE') != null ) ? JSON.parse(localStorage.getItem('BICYLIFE')) : {};
+      return (localStorage.getItem(AuthService.storageKey) != null ) ? JSON.parse(localStorage.getItem('BICYLIFE')) : {};
+   }
+
+   static saveSessionUser = (user) => {
+      window.localStorage.setItem(AuthService.storageKey, JSON.stringify(user));
+   }
+
+   static removeSessionUser = () => {
+      window.localStorage.removeItem(AuthService.storageKey);
    }
 }
 
