@@ -27,3 +27,14 @@
       border-radius: 5px; }
       .ro-header .ro-header-menu li a:hover {
         background: #1e77ba; }
+
+@media (max-width: 767px) {
+  .ro-header {
+    padding: 10px !important; }
+    .ro-header .logo {
+      display: none !important; }
+    .ro-header .ro-header-menu {
+      width: 100% !important;
+      padding: 0 !important;
+      display: flex !important;
+      justify-content: space-between !important; } }

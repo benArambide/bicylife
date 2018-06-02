@@ -1,3 +1,11 @@
 .ro-content .sticky {
   top: 80px !important;
   transition: all .2s linear !important; }
+
+@media (max-width: 767px) {
+  #root .ro-content {
+    padding-left: 10px !important;
+    padding-right: 10px !important; }
+    #root .ro-content .column {
+      padding-left: 10px !important;
+      padding-right: 10px !important; } }

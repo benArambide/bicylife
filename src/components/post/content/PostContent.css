@@ -1,0 +1,20 @@
+.ro-post .ro-post-content .ro-preview-post-img-wrap {
+  position: relative;
+  display: block; }
+  .ro-post .ro-post-content .ro-preview-post-img-wrap::before {
+    content: '';
+    position: absolute;
+    background: #000000;
+    opacity: 0;
+    transition: all .2s linear;
+    z-index: 10;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0; }
+  .ro-post .ro-post-content .ro-preview-post-img-wrap:hover::before {
+    opacity: .5; }
+  .ro-post .ro-post-content .ro-preview-post-img-wrap .ro-preview-post-img {
+    padding-bottom: 100%;
+    background-position: center;
+    background-size: cover; }

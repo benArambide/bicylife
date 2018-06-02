@@ -8,7 +8,7 @@ const LoginPage = (props) => {
       <div>
          <LoginHeader></LoginHeader>
          <div className="ui stackable grid ro-page-content">
-            <div className="eight wide column ro-height-1-1">
+            <div className="eight wide column ro-height-1-1 ro-hide-tablet">
                <div className="ro-flex ro-flex-bottom ro-height-1-1">
                   <div className="ro-page-login-message">
                      <h1 className="ro-text-white">Hola!</h1>

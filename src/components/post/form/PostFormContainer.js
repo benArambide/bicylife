@@ -26,7 +26,9 @@ class PostFormContainer extends Component{
 
    handlePost = (e) => {
       e.preventDefault();
-      if(!this.state.message) return;
+      if(
+         !this.state.message && this.state.image == null
+      ) return;
 
       this.setState({loadingPost:true});
       PostService.makePost({

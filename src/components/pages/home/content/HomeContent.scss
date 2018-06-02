@@ -1,6 +1,21 @@
+@import "assets/theme/scss/helper/_media";
+
 .ro-content{
    .sticky{
       top: 80px !important;
       transition: all .2s linear !important;
-    }
+   }
+}
+
+@include ro-media-tablet{
+   #root{
+      .ro-content{
+         padding-left: 10px !important;
+         padding-right: 10px !important;
+         .column{
+            padding-left: 10px !important;
+            padding-right: 10px !important;
+         }
+      }
+   }
 }

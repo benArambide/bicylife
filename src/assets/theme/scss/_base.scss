@@ -70,3 +70,11 @@ img{
 .ui.page.modals.dimmer.transition.visible{
    display: flex !important;
 }
+
+a { outline: none; }
+
+@include ro-media-tablet{
+   .ro-hide-tablet{
+      display: none !important;
+   }
+}

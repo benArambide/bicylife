@@ -8,7 +8,7 @@ import './HomeContent.css';
 
 const HomeContent = (props) => {
    return<div className="ui stackable grid ro-content" data-sticky-container>
-      <div className="five wide column">
+      <div className="five wide column ro-hide-tablet">
          <Sticky scrollElement=".ro-content" stickyStyle={{top:'100px'}}>
             <HomeFakeContent template="1"></HomeFakeContent>
          </Sticky>
@@ -17,7 +17,7 @@ const HomeContent = (props) => {
          <PostFormContainer></PostFormContainer>
          <PostListContainer></PostListContainer>
       </div>
-      <div className="five wide column">
+      <div className="five wide column ro-hide-tablet">
          <Sticky scrollElement=".ro-content" top="20px">
             <HomeFakeContent template="2"></HomeFakeContent>
          </Sticky>

@@ -1,3 +1,5 @@
+@import "assets/theme/scss/helper/_media";
+
 .ro-header{
    &.ro-header-dashboard{
       height: 60px;
@@ -31,6 +33,21 @@
                background: darken($color: #2185D0, $amount: 5);
             }
          }
+      }
+   }
+}
+
+@include ro-media-tablet{
+   .ro-header{
+      padding: 10px !important;
+      .logo{
+         display: none !important;
+      }
+      .ro-header-menu{
+         width: 100% !important;
+         padding: 0 !important;
+         display: flex !important;
+         justify-content: space-between !important;
       }
    }
 }
